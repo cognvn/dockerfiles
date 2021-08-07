@@ -57,13 +57,13 @@ $wgEmailAuthentication = true;
 $pgUrl = parse_url($_ENV['MW_DATABASE_URL']);
 $wgDBtype = "postgres";
 $wgDBserver = $pgUrl['host'];
-$wgDBport = $pgUrl['port'];
 $wgDBname = substr($pgUrl['path'], 1);
 $wgDBuser = $pgUrl['user'];
 $wgDBpassword = $pgUrl['pass'];
 
-# MySQL specific settings
-$wgDBprefix = "";
+# Postgres specific settings
+$wgDBport = $pgUrl['port'];
+$wgDBmwschema = "mw";
 
 # MySQL table options to use during installation or update
 $wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
@@ -90,8 +90,8 @@ $wgMemCachedServers = [];
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then set this to true:
 $wgEnableUploads = true;
-#$wgUseImageMagick = true;
-#$wgImageMagickConvertCommand = "/usr/bin/convert";
+$wgUseImageMagick = true;
+$wgImageMagickConvertCommand = "/usr/bin/convert";
 
 # InstantCommons allows wiki to use images from https://commons.wikimedia.org
 $wgUseInstantCommons = false;
@@ -117,14 +117,14 @@ $wgShellLocale = "C.UTF-8";
 # Site language code, should be one of the list in ./languages/data/Names.php
 $wgLanguageCode = "vi";
 
-$wgSecretKey = "017938da6de6171d0cb1e6681d37bbb4397ab01464eca09e6369507b24e61d5b";
+$wgSecretKey = $_ENV['MW_SECRET_KEY'];//"017938da6de6171d0cb1e6681d37bbb4397ab01464eca09e6369507b24e61d5b";
 
 # Changing this will log out all existing sessions.
 $wgAuthenticationTokenVersion = "1";
 
 # Site upgrade key. Must be set to a string (default provided) to turn on the
 # web installer while LocalSettings.php is in place
-$wgUpgradeKey = "7db6d965b0cd72b8";
+$wgUpgradeKey = $_ENV['MW_UPGRADE_KEY'];
 
 ## For attaching licensing metadata to pages, and displaying an
 ## appropriate copyright notice / icon. GNU Free Documentation
@@ -135,6 +135,7 @@ $wgRightsText = "";
 $wgRightsIcon = "";
 
 # Path to the GNU diff3 utility. Used for conflict resolution.
+$wgDiff3 = "/usr/bin/diff3";
 
 # The following permissions were set based on your choice in the installer
 $wgGroupPermissions['*']['createaccount'] = false;

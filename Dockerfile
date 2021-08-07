@@ -3,10 +3,10 @@ FROM mediawiki:1.36
 # install additional PHP extensions
 RUN set -eux; \
 	apt-get update; \
-	apt-get install -y --no-install-recommends libpq-dev libhiredis-dev; \
+	apt-get install -y --no-install-recommends libpq-dev libhiredis-dev zip; \
   pecl install -o -f redis; \
   docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql; \
-  docker-php-ext-install -j "$(nproc)" pgsql pdo pdo_pgsql; \
+  docker-php-ext-install -j "$(nproc)" pgsql pdo pdo_pgsql zip; \
   docker-php-ext-enable redis; \
   rm -r /tmp/pear; \
   apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
