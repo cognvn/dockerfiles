@@ -1,4 +1,4 @@
-FROM mediawiki:1.36
+FROM mediawiki
 
 # install additional PHP extensions
 RUN set -eux; \

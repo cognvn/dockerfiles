@@ -31,7 +31,7 @@ $wgScriptPath = "";
 $wgScriptExtension = ".php";
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer = "https://wiki.cogn.work";
+$wgServer = $_ENV['MW_SERVER_URL'];
 
 ## The URL path to static resources (images, scripts, etc.)
 $wgResourceBasePath = $wgScriptPath;
@@ -46,8 +46,8 @@ $wgLogos = ['1x' => "$wgResourceBasePath/resources/assets/cogn.png"];
 $wgEnableEmail = true;
 $wgEnableUserEmail = true; # UPO
 
-$wgEmergencyContact = "info@gdtvietnam.com";
-$wgPasswordSender = "info@gdtvietnam.com";
+$wgEmergencyContact = "cognvn@gmail.com";
+$wgPasswordSender = "cognvn@gmail.com";
 
 $wgEnotifUserTalk = false; # UPO
 $wgEnotifWatchlist = false; # UPO
@@ -64,9 +64,6 @@ $wgDBpassword = $pgUrl['pass'];
 # Postgres specific settings
 $wgDBport = $pgUrl['port'];
 $wgDBmwschema = "mw";
-
-# MySQL table options to use during installation or update
-$wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
 
 # Shared database table
 # This has no effect unless $wgSharedDB is also set.
@@ -143,14 +140,14 @@ $wgGroupPermissions['*']['edit'] = false;
 
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'vector', 'monobook':
-$wgDefaultSkin = "vector";
+$wgDefaultSkin = "chameleon";
 
 # Enabled skins.
 # The following skins were automatically enabled:
+wfLoadSkin( 'chameleon' );
 wfLoadSkin( 'MonoBook' );
 wfLoadSkin( 'Timeless' );
 wfLoadSkin( 'Vector' );
-wfLoadSkin( 'chameleon' );
 
 # Enabled extensions. Most of the extensions are enabled by adding
 # wfLoadExtension( 'ExtensionName' );
@@ -190,6 +187,7 @@ wfLoadExtension( 'WikiEditor' );
 
 # End of automatically generated settings.
 # Add more configuration options below.
+
 $wgGroupPermissions['*']['writeapi'] = true; // for Visual Editor
 # $wgGroupPermissions['*']['read'] = false;
 
@@ -204,6 +202,7 @@ $wgGroupPermissions['*']['writeapi'] = true; // for Visual Editor
 # $wgFileBackends['s3']['endpoint'] = "https://$_ENV['MW_AWS_ENPOINT']";
 # $wgAWSBucketDomain = "$1.$_ENV['MW_AWS_ENPOINT']";
 
+$wgCollapsibleSectionsEnableDesktop = true;
 $wgVectorResponsive = true;
 $egChameleonLayoutFile= __DIR__ . '/skins/chameleon/layouts/fixedhead.xml';
 set_time_limit(60);
