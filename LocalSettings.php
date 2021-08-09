@@ -28,7 +28,7 @@ $wgMetaNamespace = "Cogn_Wiki";
 ## (like /w/index.php/Page_title to /wiki/Page_title) please see:
 ## https://www.mediawiki.org/wiki/Manual:Short_URL
 $wgScriptPath = "";
-$wgScriptExtension = ".php";
+$wgArticlePath = '/w/$1';
 
 ## The protocol and server name to use in fully-qualified URLs
 $wgServer = $_ENV['MW_SERVER_URL'];
@@ -46,8 +46,8 @@ $wgLogos = ['1x' => "$wgResourceBasePath/resources/assets/cogn.png"];
 $wgEnableEmail = true;
 $wgEnableUserEmail = true; # UPO
 
-$wgEmergencyContact = "cognvn@gmail.com";
-$wgPasswordSender = "cognvn@gmail.com";
+$wgEmergencyContact = $_ENV['MW_PRIMARY_EMAIL'];
+$wgPasswordSender = $_ENV['MW_PRIMARY_EMAIL'];
 
 $wgEnotifUserTalk = false; # UPO
 $wgEnotifWatchlist = false; # UPO
@@ -81,8 +81,8 @@ $wgObjectCaches['redis'] = [
 ];
 
 ## Shared memory settings
-$wgMainCacheType = CACHE_NONE;
-$wgMemCachedServers = [];
+$wgMainCacheType = 'redis';
+$wgSessionCacheType = 'redis';
 
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then set this to true:
@@ -140,7 +140,7 @@ $wgGroupPermissions['*']['edit'] = false;
 
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'vector', 'monobook':
-$wgDefaultSkin = "chameleon";
+$wgDefaultSkin = "vector";
 
 # Enabled skins.
 # The following skins were automatically enabled:
@@ -182,13 +182,14 @@ wfLoadExtension( 'SyntaxHighlight_GeSHi' );
 wfLoadExtension( 'TemplateData' );
 wfLoadExtension( 'TextExtracts' );
 wfLoadExtension( 'TitleBlacklist' );
-wfLoadExtension( 'VisualEditor' );
+# wfLoadExtension( 'VisualEditor' );
 wfLoadExtension( 'WikiEditor' );
 
 # End of automatically generated settings.
 # Add more configuration options below.
 
-$wgGroupPermissions['*']['writeapi'] = true; // for Visual Editor
+# Settings for Visual Editor
+$wgGroupPermissions['user']['writeapi'] = true;
 # $wgGroupPermissions['*']['read'] = false;
 
 # Config S3

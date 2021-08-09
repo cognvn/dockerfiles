@@ -1,0 +1,39 @@
+# MediaWiki with MariaDB
+#
+# Access via "http://localhost:8080"
+#   (or "http://$(docker-machine ip):8080" if using docker-machine)
+version: '3'
+services:
+  mediawiki:
+    build:
+      context: .
+    restart: always
+    ports:
+      - 8080:8080
+    links:
+      - database
+    volumes:
+      - /var/www/html/images
+      # After initial setup, download LocalSettings.php to the same directory as
+      # this yaml and uncomment the following line and use compose to restart
+      # the mediawiki service
+      # - ./LocalSettings.php:/var/www/html/LocalSettings.php
+    environment:
+      PORT: 8080
+      MW_SERVER_URL: https://8080-tan-horse-on4eirg7.ws-us13.gitpod.io
+      MW_DATABASE_URL: postgres://mediawiki:wikipass@database:5432/mediawiki
+      MW_REDIS_URL: redis://cache:6379
+      MW_SECRET_KEY: supersecretkey
+      MW_UPGRADE_KEY: upgradekey
+      MW_PRIMARY_EMAIL: test@email.com
+  database:
+    image: postgres:alpine
+    restart: always
+    environment:
+      # @see https://phabricator.wikimedia.org/source/mediawiki/browse/master/includes/DefaultSettings.php
+      POSTGRES_DB: mediawiki
+      POSTGRES_USER: mediawiki
+      POSTGRES_PASSWORD: wikipass
+  cache:
+    image: redis:alpine
+    restart: always

@@ -1,0 +1,1 @@
+Dockerfile to deploy custom [Mediawiki](https://www.mediawiki.org) with settings.
