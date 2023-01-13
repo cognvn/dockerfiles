@@ -1,9 +1,9 @@
 ARG APP_PATH=/opt/outline
-FROM node:lts-alpine AS base
+FROM node:16-alpine AS base
 
 ARG APP_PATH
 WORKDIR $APP_PATH
-ARG BUILD_TAG=v0.64.3
+ARG BUILD_TAG=v0.67.2
 ADD https://github.com/outline/outline/archive/$BUILD_TAG.tar.gz /tmp
 RUN tar -xzvf /tmp/$BUILD_TAG.tar.gz -C $APP_PATH --strip-components=1; \
   rm /tmp/$BUILD_TAG.tar.gz; \
@@ -12,11 +12,11 @@ RUN tar -xzvf /tmp/$BUILD_TAG.tar.gz -C $APP_PATH --strip-components=1; \
   yarn cache clean; \
   yarn build; \
   rm -rf node_modules; \
-  yarn install --production=true --frozen-lockfile --network-timeout 1000000; \
+  yarn install --production --frozen-lockfile --network-timeout 1000000; \
   yarn cache clean;
 
 # ---
-FROM node:lts-alpine AS runner
+FROM node:16-alpine AS runner
 ARG APP_PATH=/opt/outline
 WORKDIR $APP_PATH
 ENV NODE_ENV production
