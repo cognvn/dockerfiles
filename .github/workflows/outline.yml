@@ -41,7 +41,7 @@ jobs:
       - name: Build docker image
         working-directory: outline
         run: |
-          docker build --build-arg BUILD_TAG=v${VERSION} -t ghcr.io/${{github.actor}}/outline:${VERSION} .;
+          docker build --file base.Dockerfile --build-arg BUILD_TAG=v${VERSION} -t ghcr.io/${{github.actor}}/outline:${VERSION} .;
       - name: Docker login
         if: ${{ needs.check_release.outputs.exists == 'false' }}
         uses: docker/login-action@v2
