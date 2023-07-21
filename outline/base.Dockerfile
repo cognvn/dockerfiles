@@ -7,7 +7,7 @@ ARG BUILD_TAG=v0.67.2
 ADD https://github.com/outline/outline/archive/$BUILD_TAG.tar.gz /tmp
 RUN tar -xzvf /tmp/$BUILD_TAG.tar.gz -C $APP_PATH --strip-components=1; \
   rm /tmp/$BUILD_TAG.tar.gz; \
-  sed -i '/public: true/d' ./app/scenes/Settings/components/ImageUpload.tsx; \
+  sed -i '/return "public-read";/d' ./server/models/helpers/AttachmentHelper.ts; \
   yarn install --no-optional --frozen-lockfile --network-timeout 1000000; \
   yarn cache clean; \
   yarn build; \
