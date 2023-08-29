@@ -1,5 +1,5 @@
 ARG APP_PATH=/opt/outline
-FROM node:16-alpine AS base
+FROM node:18-alpine AS base
 
 ARG APP_PATH
 WORKDIR $APP_PATH
@@ -16,7 +16,8 @@ RUN tar -xzvf /tmp/$BUILD_TAG.tar.gz -C $APP_PATH --strip-components=1; \
   yarn cache clean;
 
 # ---
-FROM node:16-alpine AS runner
+FROM node:18-alpine AS runner
+RUN apk add --update --no-cache curl ca-certificates
 ARG APP_PATH=/opt/outline
 WORKDIR $APP_PATH
 ENV NODE_ENV production
